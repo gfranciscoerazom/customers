@@ -1,5 +1,6 @@
 import { User } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
+import { Badge } from "../ui/badge";
 
 export const columns: ColumnDef<User>[] = [
     {
@@ -20,5 +21,9 @@ export const columns: ColumnDef<User>[] = [
     {
         accessorKey: 'email_verified_at',
         header: 'Email Verified At',
+        cell: ({ row }) => {
+            const value = row.getValue('email_verified_at');
+            return value ? <Badge>Verified</Badge> : <Badge variant="destructive">Not Verified</Badge>;
+        }
     }
 ];
