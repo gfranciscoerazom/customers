@@ -1,8 +1,6 @@
 import { PageLinkeItem } from "@/types";
-import { Link } from "@inertiajs/react";
 import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table";
-import DOMPurify from "dompurify";
-import { Button } from "./button";
+import { DataTablePagination } from "./data-table-pagination";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "./table";
 
 type DataTableProps<TData, TValue> = {
@@ -20,7 +18,6 @@ export function DataTable<TData, TValue>({
         data,
         columns,
         getCoreRowModel: getCoreRowModel(),
-        // getPaginationRowModel: getPaginationRowModel(),
     });
 
     return (
@@ -64,36 +61,7 @@ export function DataTable<TData, TValue>({
                     </TableBody>
                 </Table>
             </div>
-            {links.length > 0 && (
-                <div className="flex items-center justify-end space-x-2 py-4">
-                    {links.map((link, index) => (
-                        <Button asChild key={index} variant={link.active ? "default" : "outline"} size="sm">
-                            <Link
-                                href={link.url || "#"}
-                                dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(link.label) }}
-                            />
-                        </Button>
-                    ))}
-                </div>
-            )}
-            {/* <div className="flex items-center justify-end space-x-2 py-4">
-                <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => table.previousPage()}
-                    disabled={!table.getCanPreviousPage()}
-                >
-                    Previous
-                </Button>
-                <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => table.nextPage()}
-                    disabled={!table.getCanNextPage()}
-                >
-                    Next
-                </Button>
-            </div> */}
+            <DataTablePagination links={links} />
         </div>
     );
 }
