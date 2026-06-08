@@ -1,4 +1,4 @@
-import { PageLinkeItem } from "@/types/pagination";
+import { PageLinkeItem } from "@/types";
 import { Link } from "@inertiajs/react";
 import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table";
 import DOMPurify from "dompurify";

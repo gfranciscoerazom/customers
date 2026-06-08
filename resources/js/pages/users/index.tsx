@@ -1,8 +1,7 @@
 import { DataTable } from '@/components/ui/data-table';
 import { columns } from '@/components/users-data-table/columns';
 import users from '@/routes/users';
-import { User } from '@/types';
-import { PageLinkeItem } from '@/types/pagination';
+import { PageLinkeItem, User } from '@/types';
 import { Head } from '@inertiajs/react';
 
 type IndexProps = {
