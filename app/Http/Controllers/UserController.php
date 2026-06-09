@@ -11,10 +11,16 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         return Inertia::render('users/index', [
-            'users' => User::latest()->paginate(10),
+            'users' => User::when($request->search, fn ($query, $search) => $query->whereLike('name', "%{$search}%")
+                ->orWhereLike('email', "%{$search}%")
+            )
+                ->latest()
+                ->paginate(10)
+                ->withQueryString(),
+            'filters' => $request->only('search'),
         ]);
     }
 

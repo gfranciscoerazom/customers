@@ -14,6 +14,8 @@ export function DataTable<TData, TValue>({
     data,
     links,
 }: DataTableProps<TData, TValue>) {
+
+
     const table = useReactTable({
         data,
         columns,
