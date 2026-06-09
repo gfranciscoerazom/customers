@@ -14,9 +14,12 @@ class UserController extends Controller
     public function index(Request $request)
     {
         return Inertia::render('users/index', [
-            'users' => User::when($request->search, fn ($query, $search) => $query->whereLike('name', "%{$search}%")
-                ->orWhereLike('email', "%{$search}%")
-            )
+            // 'users' => User::when(
+            //     $request->search,
+            //     fn ($query, $search) => $query->whereLike('name', "%{$search}%")
+            //         ->orWhereLike('email', "%{$search}%")
+            // )
+            'users' => User::search($request->search)
                 ->latest()
                 ->paginate(10)
                 ->withQueryString(),
