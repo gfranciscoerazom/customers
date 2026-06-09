@@ -6,6 +6,7 @@ import users, { default as usersRoutes } from '@/routes/users';
 import { PageLinkeItem, User } from '@/types';
 import { Head, router } from '@inertiajs/react';
 import { Eraser } from 'lucide-react';
+import { useRef } from 'react';
 
 type UsersPaginated = {
     readonly data: User[];
@@ -22,6 +23,7 @@ type IndexProps = {
 };
 
 export default function Index({ users, filters }: IndexProps) {
+    const timeoutIdRef = useRef<number | null>(null);
     return (
         <>
             <Head title="Users" />
@@ -33,13 +35,19 @@ export default function Index({ users, filters }: IndexProps) {
                         placeholder="Search users..."
                         onChange={(e) => {
                             const userInput = e.currentTarget.value;
-                            router.get(
-                                usersRoutes.index(),
-                                userInput ? { search: userInput } : {},
-                                { preserveState: true, replace: true, preserveScroll: true }
-                            );
-                        }
-                        }
+
+                            if (timeoutIdRef.current) {
+                                clearTimeout(timeoutIdRef.current);
+                            }
+
+                            timeoutIdRef.current = setTimeout(() => {
+                                router.get(
+                                    usersRoutes.index(),
+                                    userInput ? { search: userInput } : {},
+                                    { preserveState: true, replace: true, preserveScroll: true }
+                                );
+                            }, 250);
+                        }}
                     />
                     <Button
                         variant="outline"
