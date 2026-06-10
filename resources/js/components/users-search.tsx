@@ -7,6 +7,9 @@ import { Input } from "./ui/input";
 
 export default function UsersSearch() {
     const timeoutIdRef = useRef<number | null>(null);
+    const searchValue = typeof window !== "undefined"
+        ? new URLSearchParams(window.location.search).get("search") ?? undefined
+        : undefined;
 
     const navigateUsers = (
         params: Record<string, string> = {},
@@ -36,7 +39,7 @@ export default function UsersSearch() {
                         navigateUsers(userInput ? { search: userInput } : {});
                     }, 250);
                 }}
-                defaultValue={new URLSearchParams(window.location.search).get("search") ?? undefined}
+                defaultValue={searchValue}
             />
             <Button
                 variant="outline"
