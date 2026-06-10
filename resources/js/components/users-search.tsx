@@ -36,6 +36,7 @@ export default function UsersSearch() {
                         navigateUsers(userInput ? { search: userInput } : {});
                     }, 250);
                 }}
+                defaultValue={new URLSearchParams(window.location.search).get("search") ?? undefined}
             />
             <Button
                 variant="outline"
