@@ -43,6 +43,7 @@ class User extends Authenticatable implements PasskeyUser
             $search,
             fn ($query, $search) => $query->whereLike('name', "%{$search}%")
                 ->orWhereLike('email', "%{$search}%")
+                ->orWhereLike('id', "%{$search}%")
         );
     }
 }

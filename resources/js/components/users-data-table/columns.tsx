@@ -1,6 +1,9 @@
+import { getQueryParam, updateQueryParams } from "@/lib/utils";
+import users from "@/routes/users";
 import { User } from "@/types";
+import { router } from "@inertiajs/core";
 import { ColumnDef } from "@tanstack/react-table";
-import { MoreHorizontal } from "lucide-react";
+import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../ui/dropdown-menu";
@@ -15,11 +18,45 @@ export const columns: ColumnDef<User>[] = [
     },
     {
         accessorKey: 'name',
-        header: 'Name',
+        header: () => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() => router.get(users.index(), updateQueryParams({
+                        sort: "name",
+                        order: getQueryParam("order") === "asc" ? "desc" : "asc",
+                    }), {
+                        preserveState: true,
+                        replace: true,
+                        preserveScroll: true,
+                    })}
+                >
+                    Name
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            );
+        },
     },
     {
         accessorKey: 'email',
-        header: 'Email',
+        header: () => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() => router.get(users.index(), updateQueryParams({
+                        sort: "email",
+                        order: getQueryParam("order") === "asc" ? "desc" : "asc",
+                    }), {
+                        preserveState: true,
+                        replace: true,
+                        preserveScroll: true,
+                    })}
+                >
+                    Email
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            );
+        },
     },
     {
         accessorKey: 'email_verified_at',
@@ -27,6 +64,31 @@ export const columns: ColumnDef<User>[] = [
         cell: ({ row }) => {
             const value = row.getValue('email_verified_at');
             return value ? <Badge>Verified</Badge> : <Badge variant="destructive">Not Verified</Badge>;
+        }
+    },
+    {
+        accessorKey: 'created_at',
+        header: () => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() => router.get(users.index(), updateQueryParams({
+                        sort: "created_at",
+                        order: getQueryParam("order") === "asc" ? "desc" : "asc",
+                    }), {
+                        preserveState: true,
+                        replace: true,
+                        preserveScroll: true,
+                    })}
+                >
+                    Created At
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            );
+        },
+        cell: ({ row }) => {
+            const value = row.getValue('created_at');
+            return new Date(value as string).toLocaleDateString();
         }
     },
     {

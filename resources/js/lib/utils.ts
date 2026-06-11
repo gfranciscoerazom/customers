@@ -26,6 +26,22 @@ export function updateQueryParam(
     return Object.fromEntries(params.entries());
 }
 
+export function updateQueryParams(
+    values: Record<string, string>,
+): Record<string, string> {
+    if (typeof window === 'undefined') {
+        return values;
+    }
+
+    const params = new URLSearchParams(window.location.search);
+
+    for (const [key, value] of Object.entries(values)) {
+        params.set(key, value);
+    }
+
+    return Object.fromEntries(params.entries());
+}
+
 export function getQueryParam(
     key: string,
     defaultValue: string | undefined = undefined,

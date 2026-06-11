@@ -17,7 +17,10 @@ class UserController extends Controller
 
         return Inertia::render('users/index', [
             'users' => User::search($request->search)
-                ->latest()
+                ->when($request->has('sort'), function ($query) use ($request) {
+                    $query->orderBy($request->input('sort'), $request->input('order', 'asc'));
+                })
+                // ->latest()
                 ->paginate($perPage)
                 ->withQueryString(),
         ]);
