@@ -2,24 +2,19 @@ import { DataTable } from '@/components/ui/data-table';
 import { columns } from '@/components/users-data-table/columns';
 import UsersSearch from '@/components/users-search';
 import users from '@/routes/users';
-import { PageLinkeItem, User } from '@/types';
+import { PageLinkItem, User } from '@/types';
 import { Head } from '@inertiajs/react';
 
 type UsersPaginated = {
     readonly data: User[];
-    readonly links: PageLinkeItem[];
-};
-
-type Filters = {
-    readonly search: string;
+    readonly links: PageLinkItem[];
 };
 
 type IndexProps = {
     readonly users: UsersPaginated;
-    readonly filters: Filters;
 };
 
-export default function Index({ users, filters }: IndexProps) {
+export default function Index({ users }: IndexProps) {
     return (
         <>
             <Head title="Users" />

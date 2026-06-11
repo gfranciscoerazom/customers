@@ -1,3 +1,4 @@
+import { getQueryParam, updateQueryParam } from "@/lib/utils";
 import users from "@/routes/users";
 import { router } from "@inertiajs/core";
 import { Eraser } from "lucide-react";
@@ -6,10 +7,8 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 
 export default function UsersSearch() {
-    const timeoutIdRef = useRef<number | null>(null);
-    const searchValue = typeof window !== "undefined"
-        ? new URLSearchParams(window.location.search).get("search") ?? undefined
-        : undefined;
+    const timeoutIdRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const searchValue = getQueryParam("search");
 
     const navigateUsers = (
         params: Record<string, string> = {},
@@ -36,7 +35,7 @@ export default function UsersSearch() {
                     }
 
                     timeoutIdRef.current = setTimeout(() => {
-                        navigateUsers(userInput ? { search: userInput } : {});
+                        navigateUsers(updateQueryParam("search", userInput));
                     }, 250);
                 }}
                 defaultValue={searchValue}

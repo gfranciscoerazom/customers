@@ -1,4 +1,4 @@
-import { PageLinkeItem } from "@/types";
+import { PageLinkItem } from "@/types";
 import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table";
 import { DataTablePagination } from "./data-table-pagination";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "./table";
@@ -6,7 +6,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from ".
 type DataTableProps<TData, TValue> = {
     columns: ColumnDef<TData, TValue>[];
     data: TData[];
-    links: PageLinkeItem[];
+    links: PageLinkItem[];
 };
 
 export function DataTable<TData, TValue>({

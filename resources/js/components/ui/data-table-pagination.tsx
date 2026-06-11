@@ -1,5 +1,6 @@
+import { getQueryParam, updateQueryParam } from "@/lib/utils";
 import users from "@/routes/users";
-import { PageLinkeItem } from "@/types";
+import { PageLinkItem } from "@/types";
 import { router } from "@inertiajs/core";
 import { Field, FieldLabel } from "./field";
 import {
@@ -14,7 +15,7 @@ import {
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "./select";
 
 type DataTablePaginationProps = {
-    links: PageLinkeItem[];
+    links: PageLinkItem[];
 };
 
 export function DataTablePagination({ links }: DataTablePaginationProps) {
@@ -32,11 +33,9 @@ export function DataTablePagination({ links }: DataTablePaginationProps) {
         <div className="flex items-center justify-between gap-4 mt-4">
             <Field orientation="horizontal" className="w-fit">
                 <FieldLabel htmlFor="select-rows-per-page">Rows per page</FieldLabel>
-                <Select defaultValue="10" onValueChange={(value) => router.get(
+                <Select defaultValue={getQueryParam("perPage", "25")} onValueChange={(value) => router.get(
                     users.index(),
-                    {
-                        perPage: value
-                    },
+                    updateQueryParam("perPage", value),
                     {
                         preserveState: true,
                         replace: true,
